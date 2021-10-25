@@ -1,0 +1,18 @@
+%time					: 1635099901103717868 	(time)
+field.header.seq			: 0			(uint32)
+field.header.stamp			: 1635099901103717868	(time)
+field.header.frame_id			: map			(string)
+field.info.map_load_time		: 0			(time)
+field.info.resolution			: 0.0500000007451	(float32)
+field.info.width			: 384			(uint32)
+field.info.height			: 384			(uint32)
+
+field.info.origin.position.x		: -10.0			(float64)	//Robot position x-axis
+field.info.origin.position.y		: -10.0			(float64)	//Robot position y-axis
+field.info.origin.position.z		: 0.0			(float64)	//Robot position z-axis
+
+field.info.origin.orientation.x		: 0.0			(float64)
+field.info.origin.orientation.y		: 0.0			(float64)
+field.info.origin.orientation.z		: 0.0			(float64)
+field.info.origin.orientation.w		: 1.0			(float64)
+Data_0 to Data_147455 			: represents each pixel in map of size 384x384. It's an array of int8. That is, int8 Data[147456]
