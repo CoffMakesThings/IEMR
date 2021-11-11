@@ -11,6 +11,10 @@ public class MainCamera : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        update();
+    }
+
+    void update() {
         // Mouse looking around
         yaw += sensitivity * Input.GetAxis("Mouse X");
         pitch -= sensitivity * Input.GetAxis("Mouse Y");

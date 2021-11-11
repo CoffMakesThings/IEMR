@@ -5,6 +5,7 @@ public class MainScene : MonoBehaviour
 {
     public TextAsset dataTextFile;
     public GameObject nodePrefab;
+    public GameObject turtleBot;
     readonly int dataWidthHeight = 384;
     Node[] nodes;
     List<Payload> payloads = new List<Payload>();
@@ -62,6 +63,11 @@ public class MainScene : MonoBehaviour
 
             Payload payload = payloads[currentPayloadIndex];
 
+            // Update turtlebot
+            //turtleBot.transform.position = new Vector3(payload.fieldInfoOriginPositionX, payload.fieldInfoOriginPositionY, payload.fieldInfoOriginPositionZ);
+            turtleBot.transform.position = new Vector3(-payload.fieldInfoOriginPositionX, -payload.fieldInfoOriginPositionZ, -payload.fieldInfoOriginPositionY);
+
+            // Update nodes
             for (int i = 0; i < dataWidthHeight * dataWidthHeight; i++) {
                 if (nodes[i] == null) {
                     Debug.Log("Node " + i + " is null");
