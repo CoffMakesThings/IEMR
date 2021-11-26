@@ -16,7 +16,7 @@ public class MainCamera : MonoBehaviour
 
     void update() {
         // Mouse looking around
-        yaw += sensitivity * Input.GetAxis("Mouse X");
+        yaw -= sensitivity * Input.GetAxis("Mouse X");
         pitch -= sensitivity * Input.GetAxis("Mouse Y");
         transform.eulerAngles = new Vector3(pitch, yaw, 0.0f);
 

@@ -38,6 +38,11 @@ namespace RosSharp.RosBridgeClient
 
         protected override void ReceiveMessage(MessageTypes.Nav.OccupancyGrid message)
         {
+            Debug.Log("New pos");
+            Debug.Log(message.info.origin.position.x);
+            Debug.Log(message.info.origin.position.y);
+            Debug.Log(message.info.origin.position.z);
+
             //Header
             fieldHeaderSeq = GetHeaderSequence(message);
             fieldHeaderStamp_sec = GetHeaderStamp(message);
@@ -111,9 +116,10 @@ namespace RosSharp.RosBridgeClient
         private Vector3 GetOrigin(MessageTypes.Nav.OccupancyGrid message)
         {
             return new Vector3(
-                (float)message.info.origin.position.x,
-                (float)message.info.origin.position.y,
-                (float)message.info.origin.position.z);
+                (float) message.info.origin.position.x,
+                (float) message.info.origin.position.y,
+                (float) message.info.origin.position.z
+            );
         }
 
         // Get Turtlebot Orientation

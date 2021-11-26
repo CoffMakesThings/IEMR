@@ -32,8 +32,8 @@ namespace RosSharp.RosBridgeClient
 		
         private void Update()
         {
-            if (isMessageReceived)
-                ProcessMessage();
+            // if (isMessageReceived)
+                // ProcessMessage();
         }
 
         protected override void ReceiveMessage(MessageTypes.Nav.Odometry message)

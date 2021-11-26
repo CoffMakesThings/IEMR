@@ -1,18 +1,27 @@
+using RosSharp.RosBridgeClient;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class MainScene : MonoBehaviour
 {
+    public GameObject mapGameObject;
     public TextAsset dataTextFile;
     public GameObject nodePrefab;
     public GameObject turtleBot;
+    Vector3 robotPositionOffset = new Vector3(10, 0, 10);
+    public float odometryMultiplier = 7.5f;
     readonly int dataWidthHeight = 384;
     Node[] nodes;
     List<Payload> payloads = new List<Payload>();
     int currentPayloadIndex = -1;
+    Map_Payload mapPayload;
+    OdometrySubscriber odometrySubscriber;
+    uint lastTimeStamp = 0;
 
     void Start()
     {
+        mapPayload = mapGameObject.GetComponent<Map_Payload>();
+        odometrySubscriber = mapGameObject.GetComponent<OdometrySubscriber>();
         nodes = new Node[dataWidthHeight * dataWidthHeight];
         string[] lines = dataTextFile.text.Split('\n');
         bool headerSkipped = false;
@@ -52,6 +61,47 @@ public class MainScene : MonoBehaviour
     }
 
     void Update()
+    {
+        updateWithRealData();
+        // updateWithMockData();
+    }
+
+    void updateWithRealData()
+    {
+        if (lastTimeStamp != mapPayload.fieldHeaderStamp_sec) {
+            Debug.Log("New payload " + mapPayload.fieldHeaderStamp_sec);
+            lastTimeStamp = mapPayload.fieldHeaderStamp_sec;
+
+            // Payload payload = payloads[currentPayloadIndex];
+
+            // Update turtlebot
+            // turtleBot.transform.position = new Vector3(payload.fieldInfoOriginPositionX, payload.fieldInfoOriginPositionY, payload.fieldInfoOriginPositionZ);
+            // turtleBot.transform.position = new Vector3(-mapPayload.fieldInfoOrigin.x, -mapPayload.fieldInfoOrigin.z, -mapPayload.fieldInfoOrigin.y);
+            turtleBot.transform.position = new Vector3(-odometrySubscriber.position.x, odometrySubscriber.position.y, odometrySubscriber.position.z) * odometryMultiplier + robotPositionOffset;
+            turtleBot.transform.rotation = odometrySubscriber.rotation;
+
+            // Update nodes
+            for (int i = 0; i < dataWidthHeight * dataWidthHeight; i++) {
+                if (nodes[i] == null) {
+                    Debug.Log("Node " + i + " is null");
+                }
+
+                switch (mapPayload.data[i]) {
+                    case 0:
+                        nodes[i].setNodeState(NodeState.Floor);
+                        break;
+                    case 100:
+                        nodes[i].setNodeState(NodeState.Wall);
+                        break;
+                    default:
+                        nodes[i].setNodeState(NodeState.Nothing);
+                        break;
+                }
+            }
+        }
+    }
+
+    void updateWithMockData()
     {
         if (Input.GetKey(KeyCode.Space)) {
             currentPayloadIndex++;
