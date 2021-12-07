@@ -8,7 +8,8 @@ public class MainScene : MonoBehaviour
     public TextAsset dataTextFile;
     public GameObject nodePrefab;
     public GameObject turtleBot;
-    Vector3 robotPositionOffset = new Vector3(10, 0, 10);
+    public GameObject canvas;
+    Vector3 robotPositionOffset = new Vector3(-10, 0, -10);
     public float odometryMultiplier = 7.5f;
     readonly int dataWidthHeight = 384;
     Node[] nodes;
@@ -43,6 +44,11 @@ public class MainScene : MonoBehaviour
         //    payload.log();
         //}
 
+        initializeNodes();
+    }
+
+    void initializeNodes()
+    {
         int nodeIndex = 0;
 
         // Instantiate nodes
@@ -62,6 +68,9 @@ public class MainScene : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.C)) {
+            canvas.SetActive(!canvas.activeSelf);
+        }
         updateWithRealData();
         // updateWithMockData();
     }
@@ -86,7 +95,7 @@ public class MainScene : MonoBehaviour
                     Debug.Log("Node " + i + " is null");
                 }
 
-                switch (mapPayload.data[i]) {
+                switch (mapPayload.data[dataWidthHeight * dataWidthHeight - i - 1]) {
                     case 0:
                         nodes[i].setNodeState(NodeState.Floor);
                         break;

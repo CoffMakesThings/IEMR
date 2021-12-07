@@ -377,6 +377,9 @@
     <Reference Include="System.Text.Encodings.Web">
       <HintPath>Assets\RosSharp\Plugins\Microsoft\System.Text.Encodings.Web.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>Library\PackageCache\com.unity.nuget.newtonsoft-json@2.0.0\Runtime\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.CompilerServices.Unsafe">
       <HintPath>Assets\RosSharp\Plugins\Microsoft\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>

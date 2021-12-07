@@ -21,64 +21,156 @@ limitations under the License.
 
 using UnityEngine;
 using System;
+using RosSharp.RosBridgeClient.MessageTypes.Sensor;
 
-namespace RosSharp.RosBridgeClient
+[RequireComponent(typeof(RosSharp.RosBridgeClient.RosConnector))]
+public class ImageSubscriber : RosSharp.RosBridgeClient.UnitySubscriber<RosSharp.RosBridgeClient.MessageTypes.Sensor.Image>
 {
-    [RequireComponent(typeof(RosConnector))]
-    public class ImageSubscriber : UnitySubscriber<MessageTypes.Sensor.Image>
+    public Material material;
+    public Material material2;
+    public byte[] imageData;
+    private bool isMessageReceived;
+
+    int messagesReceived = 0;
+    float firstMessageTime = 0;
+    bool receivedFirstMessage = false;
+    int mockColor = 0;
+    int dotIndex = 0;
+
+    private ComputeBuffer buffer;
+
+    protected override void Start()
     {
-        public MeshRenderer meshRenderer;
+		base.Start();
+    }
 
-        private Texture2D texture2D;
-        public byte[] imageData;
-        private bool isMessageReceived;
-
-        protected override void Start()
+    private void Update()
+    {
+        if (isMessageReceived)
         {
-			base.Start();
-            texture2D = new Texture2D(480, 640);
-            meshRenderer.material = new Material(Shader.Find("Standard"));
+            //Debug.Log(isMessageReceived);
+            ProcessMessage();
         }
-        private void Update()
-        {
-            if (isMessageReceived)
-            {
-                Debug.Log(isMessageReceived);
-                ProcessMessage();
-            }
+    }
+
+    protected override void ReceiveMessage(RosSharp.RosBridgeClient.MessageTypes.Sensor.Image compressedImage)
+    {
+        imageData = compressedImage.data;
+        isMessageReceived = true;
+    }
+
+    // Would be faster but doesnt work
+    void updateThroughShader()
+    {
+        // Send mock black/white, originally as byte and converted to int
+        //dotIndex++;
+        //if (dotIndex == 255) {
+        //    dotIndex = 0;
+        //}
+
+        //int size = 640 * 480 * 3;
+
+        //byte[] imageDataByte = new byte[size];
+
+        //for (int i = 0; i < size; i++) {
+        //    imageDataByte[i] = (byte)((i + dotIndex) % 255);
+        //}
+
+        //int[] imageDataInt = new int[size];
+
+        //for (int i = 0; i < size; i++) {
+        //    imageDataInt[i] = (int)imageDataByte[i];
+        //}
+
+        //if (buffer == null || buffer.count != imageDataInt.Length)
+        //    buffer = new ComputeBuffer(size, sizeof(int));
+
+        //buffer.SetData(imageDataInt);
+        //material.SetBuffer("_Colors", buffer);
+
+        // Send mock black/white
+        //int size = 640 * 480 * 3;
+
+        //mockColor++;
+        //if (mockColor == 255) {
+        //    mockColor = 0;
+        //}
+
+        //int[] imageDataInt = new int[size];
+
+        //for (int i = 0; i < size; i++) {
+        //    imageDataInt[i] = mockColor;
+        //}
+
+        //if (buffer == null || buffer.count != imageDataInt.Length)
+        //    buffer = new ComputeBuffer(size, sizeof(int));
+
+        //buffer.SetData(imageDataInt);
+        //material.SetBuffer("_Colors", buffer);
+
+        // Convert imageData bytes into ints, 10 lines
+        //int[] imageDataInt = new int[640 * 3 * 10];
+
+        //for (int i = 0; i < 640 * 3 * 10; i++) {
+        //    imageDataInt[i] = (int)imageData[i];
+        //}
+
+        //if (buffer == null || buffer.count != imageData.Length)
+        //    buffer = new ComputeBuffer(640 * 3 * 10, sizeof(int));
+
+        //buffer.SetData(imageDataInt);
+        //material.SetBuffer("_Colors", buffer);
+
+        // Convert imageData bytes into ints befoe sending to shader, works fine
+        int[] imageDataInt = new int[imageData.Length];
+
+        for (int i = 0; i < imageData.Length; i++) {
+            imageDataInt[i] = (int)imageData[i];
         }
 
-        protected override void ReceiveMessage(MessageTypes.Sensor.Image compressedImage)
-        {
-            imageData = compressedImage.data;
-            isMessageReceived = true;
+        if (buffer == null || buffer.count != imageData.Length)
+            buffer = new ComputeBuffer(imageDataInt.Length, sizeof(int));
+
+        buffer.SetData(imageDataInt);
+        material.SetBuffer("_Colors", buffer);
+        material2.SetBuffer("_Colors", buffer);
+
+        //Send bytes to shader directly, has weird artifacts
+        //if (buffer == null || buffer.count != imageData.Length)
+        //    buffer = new ComputeBuffer(imageData.Length, sizeof(int));
+
+        //buffer.SetData(imageData);
+        //material.SetBuffer("_Colors", buffer);
+
+        // Convert imageData bytes into Colors before sending to shader, works fine
+        //Color32[] colors = new Color32[480 * 640];
+
+        //int k = 0;
+        //for (int i = 0; i < 480 * 640; i++) {
+        //    float r = (float)imageData[k] / 255;
+        //    float g = (float)imageData[k + 1] / 255;
+        //    float b = (float)imageData[k + 2] / 255;
+        //    colors[i] = new Color(r, g, b);
+        //    k = k + 3;
+        //}
+
+        //if (buffer == null || buffer.count != colors.Length)
+        //    buffer = new ComputeBuffer(colors.Length, sizeof(float) * 4);
+
+        //buffer.SetData(colors);
+        //material.SetBuffer("_Colors", buffer);
+    }
+
+    private void ProcessMessage()
+    {
+        updateThroughShader();
+
+        if (!receivedFirstMessage) {
+            receivedFirstMessage = true;
+            firstMessageTime = Time.time;
         }
 
-        void SaveImageToDisk(Texture2D texture, string fullPath)
-        {
-            byte[] imageBytes = texture.EncodeToPNG();
-            Debug.Log("Image saved." + texture.ToString());
-            System.IO.File.WriteAllBytes(fullPath, imageBytes);
-        }
-
-        private void ProcessMessage()
-        {
-            int k = 0;
-            for(int i=0; i<480; i++)
-            {
-                for(int j=0; j<640; j++)
-                {
-                    float r = (float)imageData[k] / 255;
-                    float g = (float)imageData[k+1] / 255;
-                    float b = (float)imageData[k+2] / 255;
-                    Color color = new Color(r, g, b);
-                    texture2D.SetPixel(i, j, color);
-                    k = k + 3;
-                }
-            }
-            SaveImageToDisk(texture2D, "Assets/test.jpg");
-        }
-
+        messagesReceived++;
+        Debug.Log(messagesReceived / (Time.time - firstMessageTime) + " messages/second.");
     }
 }
-

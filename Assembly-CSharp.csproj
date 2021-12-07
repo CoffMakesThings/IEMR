@@ -62,6 +62,7 @@
     <Compile Include="Assets\Scripts\Payload.cs" />
     <Compile Include="Assets\RosSharp\Scripts\Extensions\TransformExtensions.cs" />
     <Compile Include="Assets\RosSharp\Scripts\RosBridgeClient\RosCommuncation\ImageSubscriber.cs" />
+    <Compile Include="Assets\Scripts\ImageSubscriber.cs" />
     <Compile Include="Assets\RosSharp\Scripts\RosBridgeClient\RosCommuncation\JointStateSubscriber.cs" />
     <Compile Include="Assets\RosSharp\Scripts\Urdf\UrdfComponents\UrdfJoints\UrdfJointFloating.cs" />
     <Compile Include="Assets\RosSharp\Scripts\Extensions\HeaderExtensions.cs" />
@@ -128,6 +129,7 @@
      <None Include="Assets\Mock Data\explanation.txt" />
      <None Include="Assets\RosSharp\Plugins\Microsoft\System.Memory.dll" />
      <None Include="Assets\RosSharp\Plugins\Microsoft\System.Threading.Channels.dll" />
+     <None Include="Assets\Cam Feed.shader" />
      <None Include="Assets\RosSharp\Plugins\Microsoft\System.Threading.Tasks.Extensions.dll" />
      <None Include="Assets\RosSharp\Plugins\MessageGeneration.dll" />
      <None Include="Assets\RosSharp\Plugins\Urdf.dll" />
@@ -137,11 +139,14 @@
      <None Include="Assets\RosSharp\Plugins\Microsoft\Microsoft.Bcl.AsyncInterfaces.dll" />
      <None Include="Assets\RosSharp\Plugins\Microsoft\System.Text.Json.dll" />
      <None Include="Assets\Mock Data\dataset_columns.txt" />
+     <None Include="Assets\Cam Feed World.shader" />
      <None Include="Assets\Mock Data\one_frame_data.txt" />
      <None Include="Assets\RosSharp\Plugins\Microsoft\System.Runtime.CompilerServices.Unsafe.dll" />
      <None Include="Assets\RosSharp\Plugins\External\websocket-sharp.xml" />
      <None Include="Assets\Mock Data\data.txt" />
      <None Include="Assets\RosSharp\Plugins\External\Newtonsoft.Json.Bson.dll" />
+     <None Include="Assets\Cam Feed bkp 2.shader" />
+     <None Include="Assets\Cam Feed 1 bkp.shader" />
      <None Include="Assets\RosSharp\Plugins\External\Newtonsoft.Json.Bson.xml" />
     <Reference Include="UnityEngine">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2020.3.8f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
@@ -400,6 +405,9 @@
     </Reference>
     <Reference Include="System.Text.Encodings.Web">
       <HintPath>Assets\RosSharp\Plugins\Microsoft\System.Text.Encodings.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>Library\PackageCache\com.unity.nuget.newtonsoft-json@2.0.0\Runtime\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.CompilerServices.Unsafe">
       <HintPath>Assets\RosSharp\Plugins\Microsoft\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
