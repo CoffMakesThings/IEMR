@@ -22,11 +22,11 @@ A simple wheel based solution has been used for movement. Combining the lidar ma
  <img src="images/rxr.png">
 </p>
 
-### Softwares:
+### Software:
 * OS: Ubuntu MATE (16.04) was built on RPi3
 * ROS distribution: ROS Kinetic
 * Unity
-### Hardwares:
+### Hardware:
 * Microcontrollers and Microprocessors
   * Raspberry Pi 3 and Intel Joule 570X
   * OpenCR microcontroller
@@ -35,6 +35,7 @@ A simple wheel based solution has been used for movement. Combining the lidar ma
   * Raspicam 2 and Intel real sense camera (R200)
   * Remote controller and bluetooth (RC-100B)
   * Motors - Dynamixel (XM430-W210-T)
-
+* VR Headset
+  * Oculus Rift S 
 
 ## Demo Video
