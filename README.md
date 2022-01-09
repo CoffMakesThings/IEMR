@@ -16,3 +16,5 @@ A simple wheel based solution has been used for movement. Combining the lidar ma
 <p align="center">
  <img src="images/rxr.png">
 </p>
+
+## Demo Video
