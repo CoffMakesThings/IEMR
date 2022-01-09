@@ -17,4 +17,19 @@ A simple wheel based solution has been used for movement. Combining the lidar ma
  <img src="images/rxr.png">
 </p>
 
+### Softwares:
+* OS: Ubuntu MATE (16.04) was built on RPi3
+* ROS distribution: ROS Kinetic
+* Unity
+### Hardwares:
+* Microcontrollers and Microprocessors
+  * Raspberry Pi 3 and Intel Joule 570X
+  * OpenCR microcontroller
+* Sensors and Actuators
+  * Lidar sensor (360 Laser Distance Sensor LDS-01)
+  * Raspicam 2 and Intel real sense camera (R200)
+  * Remote controller and bluetooth (RC-100B)
+  * Motors - Dynamixel (XM430-W210-T)
+
+
 ## Demo Video
