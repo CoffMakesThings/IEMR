@@ -39,4 +39,4 @@ A simple wheel based solution has been used for movement. Combining the lidar ma
   * Oculus Rift S 
 
 ## Demo Video
-[![Demo Video]("images/video.gif")](https://youtu.be/f0qDkP9X4FU)
+[![Demo Video](images/video.gif)](https://youtu.be/f0qDkP9X4FU)
